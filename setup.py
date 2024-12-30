@@ -5,7 +5,7 @@ setup(
     name='eco-tools',
     version=__version__,
     description='Librería con set de herramientas para las aplicaciones de ecosistema',
-    url='',
+    url='https://github.com/JCastilloUNP/EcoTools/blob/master/setup.py',
     author='GCCIprotUNP',
     author_email='gcciprot@unp.gov.co',
     packages=find_packages(),

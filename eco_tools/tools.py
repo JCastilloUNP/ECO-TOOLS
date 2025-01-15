@@ -20,6 +20,9 @@ def endpoint_protegido(roles:Optional[list] = None):
             e_token = request.META.get('HTTP_AUTHORIZATION')
             if e_token:
                 payload = desencriptar(CRIP_KEY_PRIVATE, e_token.replace("Bearer ", ""))
+                if payload is None:
+                    return Response(data="{'mensaje': 'token incorrecto'}",
+                                    status=status.HTTP_401_UNAUTHORIZED)
             else:
                 return Response(data="{'mensaje': 'no proporcionó un token'}",
                                 status=status.HTTP_401_UNAUTHORIZED)

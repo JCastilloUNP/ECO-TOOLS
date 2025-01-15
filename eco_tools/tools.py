@@ -51,9 +51,12 @@ def encriptar(pub_key, payload):
     return e_token.serialize()
 
 def desencriptar(priv_key, e_token):
-    # Se desencripta el token con la key PRIVADA
-    e_token_des = jwt.JWT(key=priv_key, jwt=e_token, expected_type="JWE")
-    # Se imprime el payload
-    return json.loads(e_token_des.claims)
+    try:
+        # Se desencripta el token con la key PRIVADA
+        e_token_des = jwt.JWT(key=priv_key, jwt=e_token, expected_type="JWE")
+        # Se imprime el payload
+        return json.loads(e_token_des.claims)
+    except ValueError:
+        return None
 
 

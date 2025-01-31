@@ -11,6 +11,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'django-rest-framework',
-        'jwcrypto'
+        'jwcrypto',
+        'django'
     ],
 )

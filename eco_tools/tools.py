@@ -21,25 +21,25 @@ def endpoint_protegido(roles:Optional[list] = None):
             if e_token:
                 payload = desencriptar(CRIP_KEY_PRIVATE, e_token.replace("Bearer ", ""))
                 if payload is None:
-                    return Response("{'mensaje': 'token incorrecto'}",
+                    return Response({'mensaje': 'token incorrecto'},
                                     status=status.HTTP_401_UNAUTHORIZED)
             else:
-                return Response("{'mensaje': 'no proporcionó un token'}",
+                return Response({'mensaje': 'no proporcionó un token'},
                                 status=status.HTTP_401_UNAUTHORIZED)
 
             if datetime.strptime(payload.get('refresco'), "%m/%d/%Y %H:%M:%S") < datetime.now():
-                return Response("{'mensaje': 'token expirado, loguéese de nuevo'}",
+                return Response({'mensaje': 'token expirado, loguéese de nuevo'},
                          status=status.HTTP_401_UNAUTHORIZED)
 
             if datetime.strptime(payload.get('vencimiento'), "%m/%d/%Y %H:%M:%S") < datetime.now():
-                return Response("{'mensaje': 'refresque el token e intente nuevamente'}",
+                return Response({'mensaje': 'refresque el token e intente nuevamente'},
                          status=status.HTTP_403_FORBIDDEN)
             roles_permitidos_set = set(roles_list)
             roles_token_set = set(payload.get('roles'))
             for rol in roles_token_set:
                 if rol in roles_permitidos_set:
                     return fun(self, request, *args, **kwargs)
-            return Response("{'mensaje': 'no tiene el rol necesario para acceder a este recurso'}",
+            return Response({'mensaje': 'no tiene el rol necesario para acceder a este recurso'},
                             status=status.HTTP_401_UNAUTHORIZED)
         return _wrapped_fun
     return decorator
